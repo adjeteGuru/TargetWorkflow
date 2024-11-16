@@ -2,10 +2,8 @@
 name: My Target Workflow
 
 on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+  repository_dispatch:
+    types: [trigger-workflow]
 
 jobs:
   build:
