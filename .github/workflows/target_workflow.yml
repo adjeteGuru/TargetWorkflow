@@ -1,14 +1,19 @@
+# “My Target Workflow” workflow is designed to respond to a repository_dispatch event with the trigger-workflow type. When this event occurs, it initiates the workflow
+name: My Target Workflow
+
 on:
-  push:
-    branches:
-    - main
-    - release/*
+  repository_dispatch:
+    types: [trigger-workflow]
     
 jobs:
   build:
     runs-on: ubuntu-latest
+    
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.client_payload.sha }}  # This means that the workflow will check out the specific commit or branch referenced in the sha field of the client_payload object of the triggering event
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
