@@ -3,7 +3,7 @@ name: My Target Workflow
 
 on:
   repository_dispatch:
-    types: [fire-workflow]
+    types: [trigger-workflow]
 
 jobs:
   build:
