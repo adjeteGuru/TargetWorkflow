@@ -10,17 +10,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Checkout code on Master
       uses: actions/checkout@v4
       with:
         ref: ${{ github.event.client_payload.sha }}
         
-    - name: Extract Serrvice name from the payload
-      run: |
-        service_name=${{ github.event.client_payload.service }}
-          echo "Service Name: $service_name"          
-        version=${{ github.event.client_payload.version }}
-          echo "Version: $version"
+   # - name: Extract Serrvice name from the payload
+     # run: |
+      #  service_name=${{ github.event.client_payload.service }}
+      #    echo "Service Name: $service_name"          
+      #  version=${{ github.event.client_payload.version }}
+      #    echo "Version: $version"
           
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
