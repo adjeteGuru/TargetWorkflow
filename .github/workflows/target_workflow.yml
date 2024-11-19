@@ -1,37 +1,17 @@
-# “My Target Workflow” workflow is designed to respond to a repository_dispatch event with the trigger-workflow type. When this event occurs, it initiates the workflow
-name: My Target Workflow
+name: Handle Dispatch Event
 
 on:
   repository_dispatch:
-    types: [fire-workflow]
+    types: [trigger-workflow]
 
 jobs:
-  build:
+  handle:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        ref: ${{ github.event.client_payload.sha }}
-        
-    - name: Extract Serrvice name from the payload
-      run: |
-        service_name=${{ github.event.client_payload.service }}
-          echo "Service Name: $service_name"          
-        version=${{ github.event.client_payload.version }}
-          echo "Version: $version"
-          
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
-        
-    - name: Restore dependencies
-      run: dotnet restore
-      
-    - name: Build
-      run: dotnet build --no-restore
-      
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.client_payload.ref }}  # Use the branch specified in the payload
+
+      - name: Run Build
+        run: echo "Building on branch ${{ github.event.client_payload.ref }} with SHA ${{ github.event.client_payload.sha }}"
